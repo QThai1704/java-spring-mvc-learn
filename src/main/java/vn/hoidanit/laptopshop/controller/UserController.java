@@ -2,10 +2,11 @@ package vn.hoidanit.laptopshop.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UserService;
 
 @Controller
@@ -19,25 +20,21 @@ public class UserController {
     }
 
     @RequestMapping("/")
-    public String getHomePage(Model mode) {
+    public String getHomePage(Model model) {
         String text = this.userService.handleHello();
-        mode.addAttribute("text", text);
+        model.addAttribute("text", text);
+        return "hello";
+    }
+
+    @RequestMapping(value = "/admin/user")
+    public String getUserPage(Model model) {
+        model.addAttribute("newUser", new User());
+        return "/admin/user/create";
+    }
+
+    @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
+    public String createUserPage(Model model, @ModelAttribute("newUser") User hoidanit) {
+        System.out.println("Run here" + hoidanit);
         return "hello";
     }
 }
-
-// @RestController
-// public class UserController {
-
-// // DI: Dependency injection
-// private UserService userService;
-
-// public UserController(UserService userService) {
-// this.userService = userService;
-// }
-
-// @GetMapping("")
-// public String getHomePage() {
-// return userService.handleHello();
-// }
-// }

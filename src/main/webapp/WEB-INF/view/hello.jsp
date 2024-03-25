@@ -16,8 +16,7 @@
         </head>
 
         <body>
-            ${text}
-            <button class="btn btn-success">Submit</button>
+            <h1>Hello DanIt</h1>
         </body>
 
         </html>
