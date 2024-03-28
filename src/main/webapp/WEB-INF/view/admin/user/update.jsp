@@ -6,7 +6,7 @@
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Create user</title>
+                <title>Update user</title>
                 <!-- Latest compiled and minified CSS -->
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -20,30 +20,33 @@
                 <div class="container mt-5">
                     <div class="row">
                         <div class="col-md-6 col-12 mx-auto">
-                            <h3>Create a user</h3>
+                            <h3>Update a user</h3>
                             <hr />
-                            <form:form action="/admin/user/create" method="POST" modelAttribute="newUser">
+                            <form:form action="/admin/user/update" method="POST" modelAttribute="newUser">
+                                <div class="mb-3 d-none">
+                                    <label class="form-label">ID:</label>
+                                    <form:input type="text" class="form-control" path="id" value="${user.id}" />
+                                </div>
                                 <div class="mb-3">
                                     <label class="form-label">Email:</label>
-                                    <form:input type="email" class="form-control" path="email" />
+                                    <form:input type="email" class="form-control" path="email" value="${user.email}"
+                                        disabled="True" />
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Password:</label>
-                                    <form:input type="password" class="form-control" path="password" />
-                                </div>
-                                <div class="mb-3">
+                                <div class=" mb-3">
                                     <label class="form-label">Phone number:</label>
-                                    <form:input type="text" class="form-control" path="phone" />
+                                    <form:input type="text" class="form-control" path="phone" value="${user.phone}" />
                                 </div>
-                                <div class="mb-3">
+                                <div class=" mb-3">
                                     <label class="form-label">Full Name:</label>
-                                    <form:input type="text" class="form-control" path="fullName" />
+                                    <form:input type="text" class="form-control" path="fullName"
+                                        value="${user.fullName}" />
                                 </div>
-                                <div class="mb-3">
+                                <div class=" mb-3">
                                     <label class="form-label">Address:</label>
-                                    <form:input type="text" class="form-control" path="address" />
+                                    <form:input type="text" class="form-control" path="address"
+                                        value="${user.address}" />
                                 </div>
-                                <button type="submit" class="btn btn-primary">Create</button>
+                                <button type="submit" class="btn btn-warning">Update</button>
                             </form:form>
                         </div>
                     </div>
