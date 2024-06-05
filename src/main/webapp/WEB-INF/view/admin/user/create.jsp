@@ -44,7 +44,7 @@
                                             <h3>Create a user</h3>
                                             <hr />
                                             <form:form action="/admin/user/create" method="POST"
-                                                modelAttribute="newUser" class="row">
+                                                modelAttribute="newUser" class="row" enctype="multipart/form-data">
                                                 <div class="mb-3 col-md-6 col-12">
                                                     <label class="form-label">Email:</label>
                                                     <form:input type="email" class="form-control" path="email" />
@@ -67,16 +67,15 @@
                                                 </div>
                                                 <div class="mb-3 col-md-6 col-12">
                                                     <label class="form-label">Role:</label>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option selected></option>
-                                                        <option value="1">ADMIN</option>
-                                                        <option value="2">USER</option>
-                                                    </select>
+                                                    <form:select class="form-select" path="role.name">
+                                                        <form:option value="1">ADMIN</form:option>
+                                                        <form:option value="2">USER</form:option>
+                                                    </form:select>
                                                 </div>
                                                 <div class="mb-3 col-md-6 col-12">
                                                     <label for="avatarFile" class="form-label">Avata:</label>
                                                     <input class="form-control" type="file" id="avatarFile"
-                                                        accept=".png, .jpg, .jpeg">
+                                                        accept=".png, .jpg, .jpeg" name="hoidanitFile">
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <img style="max-height: 250px; display: none;"" alt=" avatar
