@@ -90,6 +90,13 @@ public class ProductController {
     public String postUpdateProduct(@ModelAttribute("newProduct") @Valid Product product,
             BindingResult newProductBingingResult, @RequestParam("imgProductFile") MultipartFile file) {
         Product currentProduct = this.productService.getProductById(product.getId());
+        List<FieldError> errors = newProductBingingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(error.getField() + " - " + error.getDefaultMessage());
+        }
+        if(newProductBingingResult.hasErrors()) {
+            return "/admin/product/update";
+        }
         if (currentProduct != null) {
             if (!file.isEmpty()) {
                 String imgProduct = this.uploadService.handleSaveUploadFile(file, "product");

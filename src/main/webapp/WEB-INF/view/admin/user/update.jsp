@@ -34,6 +34,21 @@
                                             <hr />
                                             <form:form action="/admin/user/update" method="POST"
                                                 modelAttribute="newUser">
+                                                <c:set var="nameHasBindError">
+                                                    <form:errors path="email" />
+                                                </c:set>
+                                                <c:set var="nameHasBindError">
+                                                    <form:errors path="password" />
+                                                </c:set>
+                                                <c:set var="nameHasBindError">
+                                                    <form:errors path="fullName" />
+                                                </c:set>
+                                                <c:set var="nameHasBindError">
+                                                    <form:errors path="address" />
+                                                </c:set>
+                                                <c:set var="nameHasBindError">
+                                                    <form:errors path="phone" />
+                                                </c:set>
                                                 <div class="mb-3 d-none">
                                                     <label class="form-label">ID:</label>
                                                     <form:input type="text" class="form-control" path="id"
@@ -43,21 +58,25 @@
                                                     <label class="form-label">Email:</label>
                                                     <form:input type="email" class="form-control" path="email"
                                                         value="${user.email}" disabled="True" />
+                                                    <form:errors path="email" ccsClass="invalid-feedback" />
                                                 </div>
                                                 <div class=" mb-3">
                                                     <label class="form-label">Phone number:</label>
                                                     <form:input type="text" class="form-control" path="phone"
                                                         value="${user.phone}" />
+                                                    <form:errors path="phone" ccsClass="invalid-feedback" />
                                                 </div>
                                                 <div class=" mb-3">
                                                     <label class="form-label">Full Name:</label>
                                                     <form:input type="text" class="form-control" path="fullName"
                                                         value="${user.fullName}" />
+                                                    <form:errors path="fullName" ccsClass="invalid-feedback" />
                                                 </div>
                                                 <div class=" mb-3">
                                                     <label class="form-label">Address:</label>
                                                     <form:input type="text" class="form-control" path="address"
                                                         value="${user.address}" />
+                                                    <form:errors path="address" ccsClass="invalid-feedback" />
                                                 </div>
                                                 <button type="submit" class="btn btn-warning">Update</button>
                                             </form:form>

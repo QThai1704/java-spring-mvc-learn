@@ -45,10 +45,22 @@
                                             <hr />
                                             <form:form action="/admin/user/create" method="POST"
                                                 modelAttribute="newUser" class="row" enctype="multipart/form-data">
+                                                <c:set var="nameHasBindError">
+                                                    <form:errors path="email" />
+                                                </c:set>
+                                                <c:set var="nameHasBindError">
+                                                    <form:errors path="password" />
+                                                </c:set>
+                                                <c:set var="nameHasBindError">
+                                                    <form:errors path="fullName" />
+                                                </c:set>
+                                                <c:set var="nameHasBindError">
+                                                    <form:errors path="address" />
+                                                </c:set>
+                                                <c:set var="nameHasBindError">
+                                                    <form:errors path="phone" />
+                                                </c:set>
                                                 <div class="mb-3 col-md-6 col-12">
-                                                    <c:set var="nameHasBindError">
-                                                        <form:errors path="email" />
-                                                    </c:set>
                                                     <label class="form-label">Email:</label>
                                                     <form:input type="email"
                                                         class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
@@ -56,9 +68,6 @@
                                                     <form:errors path="email" cssClass="invalid-feedback" />
                                                 </div>
                                                 <div class="mb-3 col-md-6 col-12">
-                                                    <c:set var="nameHasBindError">
-                                                        <form:errors path="password" />
-                                                    </c:set>
                                                     <label class="form-label">Password:</label>
                                                     <form:input type="password"
                                                         class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
@@ -68,15 +77,26 @@
                                                 </div>
                                                 <div class="mb-3 col-md-6 col-12">
                                                     <label class="form-label">Phone number:</label>
-                                                    <form:input type="text" class="form-control" path="phone" />
+                                                    <form:input type="text"
+                                                        class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
+                                                        path="phone" />
+                                                    <form:errors path="phone" cssClass="invalid-feedback is-invalid" />
                                                 </div>
                                                 <div class="mb-3 col-md-6 col-12">
                                                     <label class="form-label">Full Name:</label>
-                                                    <form:input type="text" class="form-control" path="fullName" />
+                                                    <form:input type="text"
+                                                        class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
+                                                        path="fullName" />
+                                                    <form:errors path="fullName"
+                                                        cssClass="invalid-feedback is-invalid" />
                                                 </div>
                                                 <div class="mb-3 col-12">
                                                     <label class="form-label">Address:</label>
-                                                    <form:input type="text" class="form-control" path="address" />
+                                                    <form:input type="text"
+                                                        class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
+                                                        path="address" />
+                                                    <form:errors path="address"
+                                                        cssClass="invalid-feedback is-invalid" />
                                                 </div>
                                                 <div class="mb-3 col-md-6 col-12">
                                                     <label class="form-label">Role:</label>

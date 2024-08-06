@@ -54,51 +54,43 @@
                                             <hr />
                                             <form:form action="/admin/product/update" method="POST"
                                                 modelAttribute="newProduct" enctype="multipart/form-data">
-                                                <c:set var="nameHasBindError">
-                                                    <form:errors path="name" cssClass="invalid-feedback" />
-                                                </c:set>
-                                                <c:set var="nameHasBindError">
-                                                    <form:errors path="price" cssClass="invalid-feedback" />
-                                                </c:set>
-                                                <c:set var="nameHasBindError">
-                                                    <form:errors path="detailDesc" cssClass="invalid-feedback" />
-                                                </c:set>
-                                                <c:set var="nameHasBindError">
-                                                    <form:errors path="shortDesc" cssClass="invalid-feedback" />
-                                                </c:set>
-                                                <c:set var="nameHasBindError">
-                                                    <form:errors path="quantity" cssClass="invalid-feedback" />
-                                                </c:set>
                                                 <div class="mb-3 d-none">
                                                     <label class="form-label">ID:</label>
-                                                    <form:input type="text"
-                                                        class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
-                                                        path="id" value="${newProduct.id}" />
-                                                    <form:errors path="name" cssClass="invalid-feedback" />
+                                                    <form:input type="text" class="form-control" path="id"
+                                                        value="${newProduct.id}" />
                                                 </div>
                                                 <div class="mb-3 col-12">
+                                                    <c:set var="nameHasBindError">
+                                                        <form:errors path="name" />
+                                                    </c:set>
                                                     <label class="form-label">Name:</label>
                                                     <form:input type="text"
                                                         class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
                                                         path="name" />
-                                                    <form:errors path="price" cssClass="invalid-feedback" />
+                                                    <form:errors path="name" cssClass="invalid-feedback" />
                                                 </div>
                                                 <div class="mb-3 col-12">
+                                                    <c:set var="nameHasBindError">
+                                                        <form:errors path="price" />
+                                                    </c:set>
                                                     <label class="form-label">Price:</label>
                                                     <form:input type="number"
                                                         class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
                                                         path="price" />
-                                                    <form:errors path="detailDesc" cssClass="invalid-feedback" />
+                                                    <form:errors path="price" cssClass="invalid-feedback" />
                                                 </div>
                                                 <div class="mb-3 col-12">
+                                                    <c:set var="nameHasBindError">
+                                                        <form:errors path="detailDesc" />
+                                                    </c:set>
                                                     <label class="form-label">Detail description:</label>
-                                                    <form:textarea
-                                                        class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
-                                                        id="floatingTextarea2" style="height: 100px" path="detailDesc">
-                                                    </form:textarea>
-                                                    <form:errors path="shortDesc" cssClass="invalid-feedback" />
+                                                    <form:textarea class="form-control" type="text" path="detailDesc" />
+                                                    <!-- <form:errors path="detailDesc" cssClass="invalid-feedback" /> -->
                                                 </div>
                                                 <div class=" mb-3 col-12">
+                                                    <c:set var="nameHasBindError">
+                                                        <form:errors path="shortDesc" />
+                                                    </c:set>
                                                     <label class="form-label">Short description:</label>
                                                     <form:input type="text"
                                                         class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
@@ -106,6 +98,9 @@
                                                     <form:errors path="shortDesc" cssClass="invalid-feedback" />
                                                 </div>
                                                 <div class=" mb-3 col-12">
+                                                    <c:set var="nameHasBindError">
+                                                        <form:errors path="quantity" />
+                                                    </c:set>
                                                     <label class="form-label">Quantity:</label>
                                                     <form:input type="number"
                                                         class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
