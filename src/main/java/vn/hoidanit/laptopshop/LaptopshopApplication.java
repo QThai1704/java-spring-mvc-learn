@@ -11,7 +11,7 @@ public class LaptopshopApplication {
 	public static void main(String[] args) {
 		ApplicationContext abc = SpringApplication.run(LaptopshopApplication.class, args);
 		for (String s : abc.getBeanDefinitionNames()) {
-			System.out.println(s);
+			// System.out.println(s);
 		}
 	}
 

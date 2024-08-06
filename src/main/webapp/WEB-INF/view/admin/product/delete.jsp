@@ -22,34 +22,34 @@
                     <div id="layoutSidenav_content">
                         <main>
                             <div class="container-fluid px-4">
-                                <h1 class="mt-4">Delete User</h1>
+                                <h1 class="mt-4">Delete Product</h1>
                                 <ol class="breadcrumb mb-4">
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Users</li>
+                                    <li class="breadcrumb-item active">Products</li>
                                 </ol>
                                 <div class="mt-5">
                                     <div class="row">
                                         <div class="col-md-6 col-12 mx-auto">
-                                            <h3>Delete a user</h3>
+                                            <h3>Delete a product</h3>
                                             <hr />
                                             <div class="alert alert-danger" role="alert">
-                                                Are you sure to delete this uesr?
+                                                Are you sure to delete this product?
                                             </div>
-                                            <form:form action="/admin/user/delete" modelAttribute="newProduct>
-                                                <div class=" mb-3 d-none">
-                                                <label class="form-label">ID:</label>
-                                                <form:input type="text" class="form-control" path="id"
-                                                    value="${product.id}" />
+                                            <form:form action="/admin/product/delete" modelAttribute="newProduct">
+                                                <div class="mb-3 d-none">
+                                                    <label class="form-label">ID:</label>
+                                                    <form:input type="text" class="form-control" path="id"
+                                                        value="${product.id}" />
+                                                </div>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form:form>
                                         </div>
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form:form>
                                     </div>
                                 </div>
                             </div>
+                        </main>
+                        <jsp:include page="../layout/footer.jsp" />
                     </div>
-                    </main>
-                    <jsp:include page="../layout/footer.jsp" />
-                </div>
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                     crossorigin="anonymous"></script>

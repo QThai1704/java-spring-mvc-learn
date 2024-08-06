@@ -33,62 +33,66 @@
                     <div id="layoutSidenav_content">
                         <main>
                             <div class="container-fluid px-4">
-                                <h1 class="mt-4">Create User</h1>
+                                <h1 class="mt-4">Create Product</h1>
                                 <ol class="breadcrumb mb-4">
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Users</li>
+                                    <li class="breadcrumb-item active">Product</li>
                                 </ol>
                                 <div class="mt-5">
                                     <div class="row">
                                         <div class="col-md-6 col-12 mx-auto">
-                                            <h3>Create a user</h3>
+                                            <h3>Create a product</h3>
                                             <hr />
-                                            <form:form action="/admin/user/create" method="POST"
-                                                modelAttribute="newUser" class="row" enctype="multipart/form-data">
+                                            <form:form action="/admin/product/create" method="POST"
+                                                modelAttribute="newProduct" class="row" enctype="multipart/form-data">
                                                 <div class="mb-3 col-md-6 col-12">
-                                                    <c:set var="nameHasBindError">
-                                                        <form:errors path="email" />
-                                                    </c:set>
-                                                    <label class="form-label">Email:</label>
-                                                    <form:input type="email"
-                                                        class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
-                                                        path="email" />
-                                                    <form:errors path="email" cssClass="invalid-feedback" />
+                                                    <label class="form-label">Name:</label>
+                                                    <form:input type="text" class="form-control" path="name" />
                                                 </div>
                                                 <div class="mb-3 col-md-6 col-12">
-                                                    <c:set var="nameHasBindError">
-                                                        <form:errors path="password" />
-                                                    </c:set>
-                                                    <label class="form-label">Password:</label>
-                                                    <form:input type="password"
-                                                        class="form-control ${not empty nameHasBindError ? 'is-invalid': ''}"
-                                                        path="password" />
-                                                    <form:errors path="password"
-                                                        cssClass="invalid-feedback is-invalid" />
-                                                </div>
-                                                <div class="mb-3 col-md-6 col-12">
-                                                    <label class="form-label">Phone number:</label>
-                                                    <form:input type="text" class="form-control" path="phone" />
-                                                </div>
-                                                <div class="mb-3 col-md-6 col-12">
-                                                    <label class="form-label">Full Name:</label>
-                                                    <form:input type="text" class="form-control" path="fullName" />
+                                                    <label class="form-label">Price:</label>
+                                                    <form:input type="number" class="form-control" path="price" />
                                                 </div>
                                                 <div class="mb-3 col-12">
-                                                    <label class="form-label">Address:</label>
-                                                    <form:input type="text" class="form-control" path="address" />
+                                                    <label class="form-label">Detail description:</label>
+                                                    <form:textarea class="form-control" id="floatingTextarea2"
+                                                        style="height: 100px" path="detailDesc"></form:textarea>
                                                 </div>
                                                 <div class="mb-3 col-md-6 col-12">
-                                                    <label class="form-label">Role:</label>
-                                                    <form:select class="form-select" path="role.name">
-                                                        <form:option value="1">ADMIN</form:option>
-                                                        <form:option value="2">USER</form:option>
+                                                    <label class="form-label">Short description:</label>
+                                                    <form:input type="text" class="form-control" path="shortDesc" />
+                                                </div>
+                                                <div class="mb-3 col-md-6 col-12">
+                                                    <label class="form-label">Quantity:</label>
+                                                    <form:input type="number" class="form-control" path="quantity" />
+                                                </div>
+                                                <div class="mb-3 col-md-6 col-12">
+                                                    <label class="form-label">Factory:</label>
+                                                    <form:select class="form-select" path="factory">
+                                                        <form:option value="APPLE">Apple (MacBook)</form:option>
+                                                        <form:option value="ASUS">Asus</form:option>
+                                                        <form:option value="DELL">Dell</form:option>
+                                                        <form:option value="LG">LG</form:option>
+                                                        <form:option value="ACER">Acer</form:option>
+                                                        <form:option value="LENOVO">Lenovo</form:option>
+                                                    </form:select>
+                                                </div>
+                                                <div class="mb-3 col-md-6 col-12">
+                                                    <label class="form-label">Target:</label>
+                                                    <form:select class="form-select" path="target">
+                                                        <form:option value="GAMING">Gaming</form:option>
+                                                        <form:option value="SINHVIEN-VANPHONG">Sinh viên - văn phòng
+                                                        </form:option>
+                                                        <form:option value="THIET-KE-DO-HOA">Thiết kế đồ họa
+                                                        </form:option>
+                                                        <form:option value="MONG-NHE">Mỏng nhẹ</form:option>
+                                                        <form:option value="DOANH-NHAN">Doanh nhân</form:option>
                                                     </form:select>
                                                 </div>
                                                 <div class="mb-3 col-md-6 col-12">
                                                     <label for="avatarFile" class="form-label">Avata:</label>
                                                     <input class="form-control" type="file" id="avatarFile"
-                                                        accept=".png, .jpg, .jpeg" name="hoidanitFile">
+                                                        accept=".png, .jpg, .jpeg" name="imgProductFile">
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <img style="max-height: 250px; display: none;"" alt=" avatar
