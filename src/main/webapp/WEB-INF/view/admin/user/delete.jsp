@@ -35,21 +35,21 @@
                                             <div class="alert alert-danger" role="alert">
                                                 Are you sure to delete this uesr?
                                             </div>
-                                            <form:form action="/admin/user/delete" modelAttribute="newProduct>
+                                            <form:form action="/admin/user/delete" modelAttribute="newUser">
                                                 <div class=" mb-3 d-none">
-                                                <label class="form-label">ID:</label>
-                                                <form:input type="text" class="form-control" path="id"
-                                                    value="${product.id}" />
+                                                    <label class="form-label">ID:</label>
+                                                    <form:input type="text" class="form-control" path="id"
+                                                        value="${user.id}" />
+                                                </div>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form:form>
                                         </div>
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form:form>
                                     </div>
                                 </div>
                             </div>
+                        </main>
+                        <jsp:include page="../layout/footer.jsp" />
                     </div>
-                    </main>
-                    <jsp:include page="../layout/footer.jsp" />
-                </div>
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                     crossorigin="anonymous"></script>
