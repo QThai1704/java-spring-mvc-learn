@@ -32,25 +32,18 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @RequestMapping("/")
-    public String getHomePage(Model model) {
-        User arrUsers = this.userService.getUserByEmail("1@gmail.com");
-        model.addAttribute("arrUsers", arrUsers);
-        return "hello";
-    }
-
-    @RequestMapping("/admin/user")
+    @GetMapping("/admin/user")
     public String getListUser(Model model) {
         List<User> users = this.userService.getAllUsers();
         model.addAttribute("users", users);
-        return "/admin/user/show";
+        return "admin/user/show";
     }
 
     // Create
     @GetMapping("/admin/user/create")
     public String getUserPage(Model model) {
         model.addAttribute("newUser", new User());
-        return "/admin/user/create";
+        return "admin/user/create";
     }
 
     @PostMapping("/admin/user/create")
@@ -63,13 +56,14 @@ public class UserController {
             System.out.println(error.getField() + " - " + error.getDefaultMessage());
         }
         if (newUserBindingResult.hasErrors()) {
-            return "/admin/user/create";
+            return "admin/user/create";
         }
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(hoidanit.getPassword());
         hoidanit.setAvatar(avatar);
         hoidanit.setPassword(hashPassword);
         hoidanit.setRole(this.userService.getRoleByName(hoidanit.getRole().getName()));
+        System.out.println(hoidanit.getRole().getName());
         this.userService.handleSaveUser(hoidanit);
         return "redirect:/admin/user";
     }
@@ -80,7 +74,7 @@ public class UserController {
     public String getUserDetailPage(Model model, @PathVariable long id) {
         User user = this.userService.getAllUserById(id);
         model.addAttribute("user", user);
-        return "/admin/user/detail";
+        return "admin/user/detail";
     }
 
     // Update
@@ -89,7 +83,7 @@ public class UserController {
     public String getUpdateUserPage(Model model, @PathVariable long id) {
         User currentUser = this.userService.getAllUserById(id);
         model.addAttribute("newUser", currentUser);
-        return "/admin/user/update";
+        return "admin/user/update";
     }
 
     @PostMapping("/admin/user/update")
@@ -109,7 +103,7 @@ public class UserController {
     public String getDeleteUserPage(Model model, @PathVariable long id) {
         User currentUser = this.userService.getAllUserById(id);
         model.addAttribute("newUser", currentUser);
-        return "/admin/user/delete";
+        return "admin/user/delete";
     }
 
     @PostMapping(value = "/admin/user/delete")

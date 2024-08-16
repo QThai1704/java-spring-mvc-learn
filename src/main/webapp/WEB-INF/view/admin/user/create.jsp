@@ -97,7 +97,7 @@
                                                 </div>
                                                 <div class="mb-3 col-md-6 col-12">
                                                     <label class="form-label">Role:</label>
-                                                    <form:select class="form-select" path="role.name">
+                                                    <form:select class="form-select" path="role">
                                                         <form:option value="1">ADMIN</form:option>
                                                         <form:option value="2">USER</form:option>
                                                     </form:select>

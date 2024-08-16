@@ -35,14 +35,14 @@ public class ProductController {
     public String getProduct(Model model) {
         List<Product> listAllProduct = this.productService.getAllProducts();
         model.addAttribute("products", listAllProduct);
-        return "/admin/product/show";
+        return "admin/product/show";
     }
 
     // Create
     @GetMapping("/admin/product/create")
     public String getCreateProduct(Model model) {
         model.addAttribute("newProduct", new Product());
-        return "/admin/product/create";
+        return "admin/product/create";
     }
 
     @PostMapping("/admin/product/create")
@@ -53,7 +53,7 @@ public class ProductController {
             System.out.println(error.getField() + " - " + error.getDefaultMessage());
         }
         if (newProductBingingResult.hasErrors()) {
-            return "/admin/product/create";
+            return "admin/product/create";
         }
         String imgProduct = this.uploadService.handleSaveUploadFile(file, "product");
         double price = (double) newProduct.getPrice();
@@ -75,7 +75,7 @@ public class ProductController {
     public String getViewProduct(Model model, @PathVariable long id) {
         Product product = this.productService.getProductById(id);
         model.addAttribute("product", product);
-        return "/admin/product/detail";
+        return "admin/product/detail";
     }
 
     // Update
@@ -83,7 +83,7 @@ public class ProductController {
     public String getUpdateProduct(Model model, @PathVariable long id) {
         Product product = this.productService.getProductById(id);
         model.addAttribute("newProduct", product);
-        return "/admin/product/update";
+        return "admin/product/update";
     }
 
     @PostMapping("/admin/product/update")
@@ -94,8 +94,8 @@ public class ProductController {
         for (FieldError error : errors) {
             System.out.println(error.getField() + " - " + error.getDefaultMessage());
         }
-        if(newProductBingingResult.hasErrors()) {
-            return "/admin/product/update";
+        if (newProductBingingResult.hasErrors()) {
+            return "admin/product/update";
         }
         if (currentProduct != null) {
             if (!file.isEmpty()) {
@@ -119,7 +119,7 @@ public class ProductController {
     public String getDeleteProduct(Model model, @ModelAttribute("newProduct") Product product) {
         Product currentProduct = this.productService.getProductById(product.getId());
         model.addAttribute("newProduct", currentProduct);
-        return "/admin/product/delete";
+        return "admin/product/delete";
     }
 
     @PostMapping("/admin/product/delete")

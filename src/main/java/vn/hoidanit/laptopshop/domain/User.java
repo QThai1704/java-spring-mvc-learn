@@ -37,7 +37,7 @@ public class User {
     private String avatar;
 
     @ManyToOne
-    @JoinColumn(name = "role")
+    @JoinColumn(name = "roles")
     private Role role;
 
     @OneToMany(mappedBy = "user")
