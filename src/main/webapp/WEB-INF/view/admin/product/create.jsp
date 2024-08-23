@@ -76,10 +76,10 @@
                                                 </div>
                                                 <div class="mb-3 col-12">
                                                     <label class="form-label">Detail description:</label>
-                                                    <form:textarea
+                                                    <textarea
                                                         class="form-control ${not empty nameHasBindError?'is-invalid': ''}"
                                                         id="floatingTextarea2" style="height: 100px" path="detailDesc">
-                                                    </form:textarea>
+                                                    </textarea>
                                                     <form:errors path="detailDesc" cssClass="invalid-feedback" />
                                                 </div>
                                                 <div class="mb-3 col-md-6 col-12">

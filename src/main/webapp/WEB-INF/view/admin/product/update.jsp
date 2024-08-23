@@ -110,7 +110,7 @@
                                                 <div class=" mb-3 col-12">
                                                     <label class="form-label">Factory:</label>
                                                     <form:select class="form-select" path="factory">
-                                                        <form:option value=" APPLE">Apple (MacBook)</form:option>
+                                                        <form:option value="APPLE">Apple (MacBook)</form:option>
                                                         <form:option value="ASUS">Asus</form:option>
                                                         <form:option value="DELL">Dell</form:option>
                                                         <form:option value="LG">LG</form:option>
@@ -121,7 +121,7 @@
                                                 <div class="mb-3 col-12">
                                                     <label class="form-label">Target:</label>
                                                     <form:select class="form-select" path="target">
-                                                        <form:option value=" GAMING">Gaming</form:option>
+                                                        <form:option value="GAMING">Gaming</form:option>
                                                         <form:option value="SINHVIEN-VANPHONG">Sinh viên - văn phòng
                                                         </form:option>
                                                         <form:option value="THIET-KE-DO-HOA">Thiết kế đồ họa

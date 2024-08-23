@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+            <!DOCTYPE html>
             <html lang="en">
 
             <head>
@@ -105,12 +106,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="pagination d-flex justify-content-center mt-5">
+                                <li class="${1 eq currentPage?'page-item d-none': 'page-item'}">
+                                    <a class="page-link" href="/?page=${currentPage - 1}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <c:forEach begin="0" end="${totalPages-1}" varStatus="loop">
+                                    <li class="page-item">
+                                        <a class="${(loop.index + 1) eq currentPage?'page-link active': 'page-link'}"
+                                            href="/?page=${loop.index + 1}">
+                                            ${loop.index + 1}
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                                <li class="${totalPages eq currentPage?'page-item d-none': 'page-item'}">
+                                    <a class="page-link" href="/?page=${currentPage + 1}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <!-- Fruits Shop End-->
-
-
                 <jsp:include page="../layout/feature.jsp" />
                 <jsp:include page="../layout/footer.jsp" />
 
