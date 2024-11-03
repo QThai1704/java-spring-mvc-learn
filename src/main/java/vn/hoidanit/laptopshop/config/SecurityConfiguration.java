@@ -61,7 +61,7 @@ public class SecurityConfiguration {
                                                                 DispatcherType.INCLUDE)
                                                 .permitAll()
                                                 .requestMatchers("/", "/login", "/client/**", "/css/**", "/js/**",
-                                                                "/images/**", "/product/**")
+                                                                "/images/**", "/product/**", "admin/**")
                                                 .permitAll()
                                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                                 .anyRequest().authenticated())
@@ -73,7 +73,7 @@ public class SecurityConfiguration {
 
                                 .sessionManagement((sessionManagement) -> sessionManagement
                                                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                                                .invalidSessionUrl("/logint")
+                                                .invalidSessionUrl("/login")
                                                 .maximumSessions(1)
                                                 .maxSessionsPreventsLogin(false))
                                 .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))

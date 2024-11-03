@@ -108,8 +108,8 @@
                                                         accept=".png, .jpg, .jpeg" name="hoidanitFile">
                                                 </div>
                                                 <div class="col-12 mb-3">
-                                                    <img style="max-height: 250px; display: none;"" alt=" avatar
-                                                        preview" id="avatarPreview">
+                                                    <img style="max-height: 250px; display: none;" alt=" avatar
+                                                        preview" id="avatarPreview" />
                                                 </div>
                                                 <div class="col-12 mb-5">
                                                     <button type="submit" class="btn btn-primary">Create</button>

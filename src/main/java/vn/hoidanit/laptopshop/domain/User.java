@@ -27,7 +27,7 @@ public class User {
 
     @NotNull
     @Size(min = 3, message = "Password phải có tối thiểu 3 ký tự")
-    // @StrongPassword(message = "Pass phải có 6 ký tự")
+    @StrongPassword(message = "Pass phải có 6 ký tự")
     private String password;
     @NotNull
     @Size(min = 2, message = "Tên phải có tối thiểu 2 ký tự")
@@ -37,7 +37,7 @@ public class User {
     private String avatar;
 
     @ManyToOne
-    @JoinColumn(name = "roles")
+    @JoinColumn(name = "role_id")
     private Role role;
 
     @OneToMany(mappedBy = "user")
