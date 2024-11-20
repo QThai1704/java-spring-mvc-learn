@@ -1,6 +1,8 @@
 package vn.hoidanit.laptopshop.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -73,7 +75,6 @@ public class ProductService {
                 oldCartDetail.setQuantity(oldCartDetail.getQuantity() + 1);
                 this.cartDetailRepository.save(oldCartDetail);
             }
-
         }
     }
 
@@ -81,6 +82,9 @@ public class ProductService {
         User currentUser = new User();
         currentUser.setId(id);
         Cart cart = this.cartRepository.findByUser(currentUser);
+        if (cart == null) {
+            return new ArrayList<CartDetail>();
+        }
         return cart.getCartDetails();
     }
 }
