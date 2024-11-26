@@ -111,6 +111,6 @@ public class ItemController {
                 .build();
         this.productService.handlePlaceOrder(currentUser, newReceiverDTO, session);
 
-        return "redirect:/";
+        return "client/cart/thanks";
     }
 }
