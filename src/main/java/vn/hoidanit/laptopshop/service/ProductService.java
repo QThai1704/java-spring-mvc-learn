@@ -21,6 +21,7 @@ import vn.hoidanit.laptopshop.repository.OrderDetailRepository;
 import vn.hoidanit.laptopshop.repository.OrderRepository;
 import vn.hoidanit.laptopshop.repository.ProductRepository;
 import vn.hoidanit.laptopshop.service.specification.ProductSpecs;
+import vn.hoidanit.laptopshop.util.constant.PaymentStatusEnum;
 
 @Service
 public class ProductService {
@@ -101,7 +102,7 @@ public class ProductService {
         this.productRepository.deleteById(id);
     }
 
-    public void handleAddProductToCart(String email, long productId, HttpSession session) {
+    public void handleAddProductToCart(String email, long productId, HttpSession session, long quantity) {
         User user = this.userService.getUserByEmail(email);
         if (user != null) {
             Cart cart = this.cartRepository.findByUser(user);
@@ -164,14 +165,17 @@ public class ProductService {
         }
     }
 
-    public void handlePlaceOrder(User user, ReceiverDTO receiverDTO, HttpSession session) {
+    public void handlePlaceOrder(User user, ReceiverDTO receiverDTO, HttpSession session, String uuid) {
         double totalPrice = 0;
-        Order order = Order.builder()
-                .user(user)
-                .receiverName(receiverDTO.getReceiverName())
-                .receiverAddress(receiverDTO.getReceiverAddress())
-                .receiverPhone(receiverDTO.getReceiverPhone())
-                .build();
+        Order order = new Order();
+        order.setUser(user);
+        order.setReceiverName(receiverDTO.getReceiverName());
+        order.setReceiverAddress(receiverDTO.getReceiverAddress());
+        order.setReceiverPhone(receiverDTO.getReceiverPhone());
+        order.setStatus("PENDING");
+        order.setPaymentMethod(receiverDTO.getPaymentMethod());
+        order.setPaymentStatus(PaymentStatusEnum.PAYMENT_UNPAID);
+        order.setPaymentRef(receiverDTO.getPaymentMethod() == "COD" ? "UNKNOWN" : uuid);
         order = this.orderRepository.save(order);
 
         // create OrderDetail
@@ -202,6 +206,16 @@ public class ProductService {
 
             // Update attribute sum in session
             session.setAttribute("sum", 0);
+        }
+    }
+
+    public void updatePaymentStatus(String paymentRef, PaymentStatusEnum paymentStatus) {
+        Optional<Order> orderOptional = this.orderRepository.findByPaymentRef(paymentRef);
+        if (orderOptional.isPresent()) {
+            // update
+            Order order = orderOptional.get();
+            order.setPaymentStatus(paymentStatus);
+            this.orderRepository.save(order);
         }
     }
 }

@@ -1,13 +1,15 @@
 package vn.hoidanit.laptopshop.controller.client;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +26,17 @@ import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.domain.dto.ReceiverDTO;
 import vn.hoidanit.laptopshop.service.ProductService;
+import vn.hoidanit.laptopshop.service.VNPayService;
+import vn.hoidanit.laptopshop.util.constant.PaymentStatusEnum;
 
 @Controller
 public class ItemController {
     private final ProductService productService;
+    private final VNPayService vNPayService;
 
-    public ItemController(ProductService productService) {
+    public ItemController(ProductService productService, VNPayService vNPayService) {
         this.productService = productService;
+        this.vNPayService = vNPayService;
     }
 
     @GetMapping("/product/{id}")
@@ -44,7 +50,7 @@ public class ItemController {
     public String addProductToCart(@PathVariable long id, HttpServletRequest request) {
         long productId = id;
         String email = (String) request.getSession().getAttribute("email");
-        this.productService.handleAddProductToCart(email, productId, request.getSession());
+        this.productService.handleAddProductToCart(email, productId, request.getSession(), 1);
         return "redirect:/";
     }
 
@@ -105,7 +111,9 @@ public class ItemController {
     public String handlePlaceOrder(HttpServletRequest request,
             @RequestParam("receiverName") String receiverName,
             @RequestParam("receiverAddress") String receiverAddress,
-            @RequestParam("receiverPhone") String receiverPhone) {
+            @RequestParam("receiverPhone") String receiverPhone,
+            @RequestParam("paymentMethod") String paymentMethod,
+            @RequestParam("totalPrice") String totalPrice) throws NumberFormatException, UnsupportedEncodingException {
         User currentUser = new User();
         HttpSession session = request.getSession(false);
         long id = (long) session.getAttribute("id");
@@ -114,9 +122,31 @@ public class ItemController {
                 .receiverName(receiverName)
                 .receiverAddress(receiverAddress)
                 .receiverPhone(receiverPhone)
+                .paymentMethod(paymentMethod)
                 .build();
-        this.productService.handlePlaceOrder(currentUser, newReceiverDTO, session);
+        final String uuid = UUID.randomUUID().toString().replace("-", "");
+        this.productService.handlePlaceOrder(currentUser, newReceiverDTO, session, uuid);
+        if (!paymentMethod.equals("COD")) {
+            // todo: redirect to VNPAY
+            String ip = this.vNPayService.getIpAddress(request);
+            String vnpUrl = this.vNPayService.generateVNPayURL(Double.parseDouble(totalPrice), uuid, ip);
+            return "redirect:" + vnpUrl;
+        }
 
+        return "redirect:/thanks";
+    }
+
+    @GetMapping("/thanks")
+    public String getThankYouPage(Model model,
+            @RequestParam("vnp_ResponseCode") Optional<String> vnpayResponseCode,
+            @RequestParam("vnp_TxnRef") Optional<String> paymentRef) {
+        if (vnpayResponseCode.isPresent() && paymentRef.isPresent()) {
+            // thanh toán qua VNPAY, cập nhật trạng thái order
+            PaymentStatusEnum paymentStatus = vnpayResponseCode.get().equals("00")
+                    ? PaymentStatusEnum.PAYMENT_SUCCEED
+                    :  PaymentStatusEnum.PAYMENT_FAILED;
+            this.productService.updatePaymentStatus(paymentRef.get(), paymentStatus);
+        }
         return "client/cart/thanks";
     }
 

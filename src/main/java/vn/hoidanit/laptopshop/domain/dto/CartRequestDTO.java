@@ -2,19 +2,17 @@ package vn.hoidanit.laptopshop.domain.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
-@Builder
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ReceiverDTO {
-    String receiverName;
-    String receiverAddress;
-    String receiverPhone;
-    String paymentMethod;
+public class CartRequestDTO {
+    long quantity;
+    long productId;
 }
