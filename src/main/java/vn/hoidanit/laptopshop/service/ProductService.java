@@ -1,12 +1,10 @@
 package vn.hoidanit.laptopshop.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
@@ -15,7 +13,6 @@ import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Order;
 import vn.hoidanit.laptopshop.domain.OrderDetail;
 import vn.hoidanit.laptopshop.domain.Product;
-import vn.hoidanit.laptopshop.domain.Product_;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.domain.dto.ReceiverDTO;
 import vn.hoidanit.laptopshop.repository.CartDetailRepository;
@@ -23,6 +20,7 @@ import vn.hoidanit.laptopshop.repository.CartRepository;
 import vn.hoidanit.laptopshop.repository.OrderDetailRepository;
 import vn.hoidanit.laptopshop.repository.OrderRepository;
 import vn.hoidanit.laptopshop.repository.ProductRepository;
+import vn.hoidanit.laptopshop.service.specification.ProductSpecs;
 
 @Service
 public class ProductService {
@@ -48,12 +46,46 @@ public class ProductService {
         return this.productRepository.save(newProduct);
     }
 
-    private Specification<Product> nameLike(String name) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
+    // Fetch
+    public Page<Product> fetchProductsGreateThanMinPrice(Pageable pageable, double price) {
+        return this.productRepository.findAll(ProductSpecs.priceGe(price), pageable);
     }
 
-    public Page<Product> fetchProducts(Pageable pageable, String name) {
-        return this.productRepository.findAll(this.nameLike(name), pageable);
+    public Page<Product> fetchProductsLessThanMaxPrice(Pageable pageable, double price) {
+        return this.productRepository.findAll(ProductSpecs.priceLe(price), pageable);
+    }
+
+    public Page<Product> fetchProductsWithName(Pageable pageable, String name) {
+        return this.productRepository.findAll(ProductSpecs.nameLike(name), pageable);
+    }
+
+    public Page<Product> fetchProductsWithFactory(Pageable pageable, String factory) {
+        return this.productRepository.findAll(ProductSpecs.factoryLike(factory), pageable);
+    }
+
+    public Page<Product> fetchProductsWithFactorys(Pageable pageable, List<String> factory) {
+        return this.productRepository.findAll(ProductSpecs.factorysIn(factory), pageable);
+    }
+
+    public Page<Product> fetchProductsAboutMaxAndMin(Pageable pageable, String price) {
+        double min = 0;
+        double max = 0;
+        if (price.equals("10-15")) {
+            min = 10000000;
+            max = 15000000;
+            return this.productRepository.findAll(ProductSpecs.priceAnd(min, max), pageable);
+        } else if (price.equals("15-30")) {
+            min = 15000000;
+            max = 30000000;
+            return this.productRepository.findAll(ProductSpecs.priceAnd(min, max), pageable);
+        } else if (price.equals("tren-30")) {
+            min = 30000000;
+            return this.productRepository.findAll(ProductSpecs.priceGe(min), pageable);
+        } else if (price.equals("duoi-10")) {
+            max = 10000000;
+            return this.productRepository.findAll(ProductSpecs.priceLe(max), pageable);
+        }
+        return this.productRepository.findAll(pageable);
     }
 
     public Page<Product> fetchProducts(Pageable pageable) {
@@ -64,6 +96,7 @@ public class ProductService {
         return this.productRepository.findById(id);
     }
 
+    // Delete
     public void deleteProduct(long id) {
         this.productRepository.deleteById(id);
     }

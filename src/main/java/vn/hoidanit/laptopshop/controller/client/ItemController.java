@@ -1,6 +1,7 @@
 package vn.hoidanit.laptopshop.controller.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,8 +123,19 @@ public class ItemController {
     @GetMapping("/products")
     public String getProductPage(Model model,
             @RequestParam("page") Optional<String> pageOptional,
-            @RequestParam("name") Optional<String> nameOptional) {
+            @RequestParam("name") Optional<String> nameOptional,
+            @RequestParam("factory") Optional<String> factoryOptional,
+            @RequestParam("min-price") Optional<String> minPriceOptional,
+            @RequestParam("max-price") Optional<String> maxPriceOptional,
+            @RequestParam("price") Optional<String> priceOptional) {
         int page = 1;
+        // String factory = factoryOptional.isPresent() ? factoryOptional.get() : "";
+        // List<String> factorys = Arrays.asList(factoryOptional.get().split(","));
+        // double minPrice = minPriceOptional.isPresent() ?
+        // Double.parseDouble(minPriceOptional.get()) : 0;
+        // double maxPrice = maxPriceOptional.isPresent() ?
+        // Double.parseDouble(minPriceOptional.get()) : 100000000;
+        // String price = priceOptional.isPresent() ? priceOptional.get() : "";
         try {
             if (pageOptional.isPresent()) {
                 // convert from String to int
@@ -135,13 +147,18 @@ public class ItemController {
             // page = 1
             // TODO: handle exception
         }
-
-        String name = nameOptional.get();
-
+        String name = nameOptional.isPresent() ? nameOptional.get() : "";
         Pageable pageable = PageRequest.of(page - 1, 6);
-        Page<Product> prs = this.productService.fetchProducts(pageable, name);
+        Page<Product> prs = this.productService.fetchProductsWithName(pageable, name);
+        // Page<Product> prs =
+        // this.productService.fetchProductsGreateThanMinPrice(pageable, minPrice);
+        // Page<Product> prs = this.productService.fetchProductsWithFactory(pageable,
+        // factorys);
+        // Page<Product> prs = this.productService.fetchProductsAboutMaxAndMin(pageable,
+        // price);
+        // Page<Product> prs =
+        // this.productService.fetchProductsLessThanMaxPrice(pageable, maxPrice);
         List<Product> products = prs.getContent();
-
         model.addAttribute("products", products);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", prs.getTotalPages());
