@@ -16,6 +16,7 @@ import org.springframework.session.security.web.authentication.SpringSessionReme
 import jakarta.servlet.DispatcherType;
 import vn.hoidanit.laptopshop.service.CustomUserDetailsService;
 import vn.hoidanit.laptopshop.service.UserService;
+import vn.hoidanit.laptopshop.service.userinfo.CustomOAuth2UserService;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
@@ -54,17 +55,23 @@ public class SecurityConfiguration {
         }
 
         @Bean
-        SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        SecurityFilterChain filterChain(HttpSecurity http, UserService userService) throws Exception {
                 http
                                 .authorizeHttpRequests(authorize -> authorize
                                                 .dispatcherTypeMatchers(DispatcherType.FORWARD,
                                                                 DispatcherType.INCLUDE)
                                                 .permitAll()
-                                                .requestMatchers("/**", "/login", "/client/**", "/css/**", "/js/**",
-                                                                "/images/**", "/product/**", "admin/**")
+                                                .requestMatchers("/", "/login", "/client/**", "/css/**", "/js/**",
+                                                                "/images/**", "/product/**")
                                                 .permitAll()
                                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                                 .anyRequest().authenticated())
+                                .oauth2Login(oauth2 -> oauth2
+                                                .loginPage("/login")
+                                                .failureUrl("/login?error")
+                                                .successHandler(customSuccessHandler())
+                                                .userInfoEndpoint(user -> user
+                                                                .userService(new CustomOAuth2UserService(userService))))
                                 .formLogin(formLogin -> formLogin
                                                 .loginPage("/login")
                                                 .failureUrl("/login?error")
@@ -83,5 +90,4 @@ public class SecurityConfiguration {
                                                 .accessDeniedPage("/access-deny"));
                 return http.build();
         }
-
 }

@@ -3,6 +3,8 @@ package vn.hoidanit.laptopshop.domain;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -10,11 +12,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import vn.hoidanit.laptopshop.service.validator.StrongPassword;
+import vn.hoidanit.laptopshop.util.constant.ProviderEnum;
 
 @Entity
 @Table(name = "users")
@@ -36,6 +40,14 @@ public class User {
     private String address;
     private String phone;
     private String avatar;
+    @Enumerated(EnumType.STRING)
+    ProviderEnum provider;
+
+    @PrePersist
+    public void setProvider() {
+        if(this.provider == null)
+            this.provider = ProviderEnum.LOCAL;
+    }
 
     @ManyToOne
     @JoinColumn(name = "role_id")
@@ -144,5 +156,13 @@ public class User {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public ProviderEnum getProvider() {
+        return provider;
+    }
+
+    public void setProvider(ProviderEnum provider) {
+        this.provider = provider;
     }
 }

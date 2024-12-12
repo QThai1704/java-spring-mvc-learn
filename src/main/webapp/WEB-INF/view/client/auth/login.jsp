@@ -60,17 +60,15 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                            <div>
+                                            <div class="mx-auto">
                                                 <div style="text-align: center"><span>Hoặc sử dụng</span></div>
                                                 <div class="d-ex justify-content-center align-items-center my-3"
                                                 style="gap: 20px">
                                                     <a href="/oauth2/authorization/google" title="Đăng nhập với Google">
-                                                    <img height="40" width="40"
-                                                    src="/client/img/provider/default-google.png" />
+                                                    <img height="40" width="40" src="/client/img/provider/default-google.png" />
                                                     </a>
                                                     <a href="/oauth2/authorization/github" title="Đăng nhập với Github">
-                                                    <img height="40" width="40"
-                                                    src="/client/img/provider/default-github.png" />
+                                                    <img height="40" width="40" src="/client/img/provider/default-github.png" />
                                                     </a>
                                                 </div>
                                             </div>
